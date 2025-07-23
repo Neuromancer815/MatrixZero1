@@ -1,5 +1,6 @@
 package com.neuromancer.matrixzero;
 
+import com.neuromancer.matrixzero.tile.TileManager;
 import entity.Player;
 
 import javax.swing.*;
@@ -10,12 +11,13 @@ public class GamePanel extends JPanel implements Runnable{
     final int originalTileSie = 16; //16x16 tiles
     final int scale = 5;
     public final int tileSize = originalTileSie * scale; //80x80 tile
-    final int maxScreenColumn = 16;
-    final int maxScreenRow = 12; //4:3 screen ratio
-    final int screenWidth = tileSize * maxScreenColumn; //768 px
-    final int screenHeight = tileSize * maxScreenRow; //576 px
+    public final int maxScreenColumn = 40;
+    public final int maxScreenRow = 25; //4:3 screen ratio
+    public final int screenWidth = tileSize * maxScreenColumn; //768 px
+    public final int screenHeight = tileSize * maxScreenRow; //576 px
     int FPS = 60; //framerate
 
+    TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
     Player player = new Player(this, keyH);
@@ -98,7 +100,8 @@ public class GamePanel extends JPanel implements Runnable{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        player.draw(g2);
+        tileM.draw(g2); //draw tiles first
+        player.draw(g2); //then draw player
         g2.dispose();
     }
 
