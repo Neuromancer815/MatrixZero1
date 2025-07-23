@@ -54,27 +54,34 @@ public class Player extends Entity {
             int dx = 0;
             int dy = 0;
 
-            if (keyH.upPressed) {
-                dy -= speed;
-                direction = "up";
-            }
-            if (keyH.downPressed) {
-                dy += speed;
-                direction = "down";
-            }
-            if (keyH.leftPressed) {
-                dx -= speed;
-                direction = "left";
-            }
-            if (keyH.rightPressed) {
-                dx += speed;
-                direction = "right";
+            if (keyH.upPressed && !keyH.downPressed) {
+                dy = -speed;
+            } else if (keyH.downPressed && !keyH.upPressed) {
+                dy = speed;
+            } else if (keyH.upPressed && keyH.downPressed) {
+                // Resolve conflict based on last key
+                dy = keyH.lastDirectionPressed.equals("up") ? -speed :
+                        keyH.lastDirectionPressed.equals("down") ? speed : 0;
             }
 
+            if (keyH.leftPressed && !keyH.rightPressed) {
+                dx = -speed;
+            } else if (keyH.rightPressed && !keyH.leftPressed) {
+                dx = speed;
+            } else if (keyH.leftPressed && keyH.rightPressed) {
+                // Resolve conflict based on last key
+                dx = keyH.lastDirectionPressed.equals("left") ? -speed :
+                        keyH.lastDirectionPressed.equals("right") ? speed : 0;
+            }
+
+// Normalize diagonal movement
             if (dx != 0 || dy != 0) {
                 double length = Math.sqrt(dx * dx + dy * dy);
                 dx = (int)(dx / length * speed);
                 dy = (int)(dy / length * speed);
+
+                // Set animation direction
+                direction = keyH.lastDirectionPressed;
             }
 
             x += dx;
