@@ -1,7 +1,6 @@
 package com.neuromancer.matrixzero.tile;
 
 import com.neuromancer.matrixzero.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;

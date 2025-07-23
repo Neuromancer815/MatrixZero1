@@ -2,7 +2,6 @@ package entity;
 
 import com.neuromancer.matrixzero.GamePanel;
 import com.neuromancer.matrixzero.KeyHandler;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
